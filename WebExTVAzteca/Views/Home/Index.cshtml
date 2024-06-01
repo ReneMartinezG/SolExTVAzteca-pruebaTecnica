@@ -1,0 +1,49 @@
+﻿@using DataNotas.Models
+@model List<Notas>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center mt-2">Notas</h2>
+
+<a href="/Home/IrCatalogo">Catalogo</a>
+<a href="/Home/CrearNota">Crear nota</a>
+
+<table class="table">
+    <tr>
+        <td>
+            Numero de nota
+        </td>
+        <td>
+            Fecha de compra
+        </td>
+        <td>
+            Total
+        </td>
+        <td>
+            Detalle
+        </td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                000-@item.id
+            </td>
+            <td>
+                @item.FechaCompra.ToString("dd-MM-yyyy");
+            </td>
+            <td>
+                @item.Total.ToString("c")
+            </td>
+            <td>
+                <a href="/Home/AgregarProductos?idNota=@item.id">Desglose</a>
+            </td>
+        </tr>
+    }
+
+</table>
+

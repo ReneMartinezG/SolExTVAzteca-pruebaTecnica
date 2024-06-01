@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ExamenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Catalogos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="producto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompraNotasCatalogos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idNotas" Type="int" Nullable="false" />
+          <Property Name="idCatalogos" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="FechaCompra" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CompraNotasCatalogos_Catalogos">
+          <End Role="Catalogos" Type="Self.Catalogos" Multiplicity="1" />
+          <End Role="CompraNotasCatalogos" Type="Self.CompraNotasCatalogos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalogos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompraNotasCatalogos">
+              <PropertyRef Name="idCatalogos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraNotasCatalogos_Notas">
+          <End Role="Notas" Type="Self.Notas" Multiplicity="1" />
+          <End Role="CompraNotasCatalogos" Type="Self.CompraNotasCatalogos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompraNotasCatalogos">
+              <PropertyRef Name="idNotas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExamenModelStoreContainer">
+          <EntitySet Name="Catalogos" EntityType="Self.Catalogos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompraNotasCatalogos" EntityType="Self.CompraNotasCatalogos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notas" EntityType="Self.Notas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CompraNotasCatalogos_Catalogos" Association="Self.FK_CompraNotasCatalogos_Catalogos">
+            <End Role="Catalogos" EntitySet="Catalogos" />
+            <End Role="CompraNotasCatalogos" EntitySet="CompraNotasCatalogos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraNotasCatalogos_Notas" Association="Self.FK_CompraNotasCatalogos_Notas">
+            <End Role="Notas" EntitySet="Notas" />
+            <End Role="CompraNotasCatalogos" EntitySet="CompraNotasCatalogos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExamenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Catalogos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="producto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="CompraNotasCatalogos" Relationship="Self.FK_CompraNotasCatalogos_Catalogos" FromRole="Catalogos" ToRole="CompraNotasCatalogos" />
+        </EntityType>
+        <EntityType Name="CompraNotasCatalogos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idNotas" Type="Int32" Nullable="false" />
+          <Property Name="idCatalogos" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Catalogos" Relationship="Self.FK_CompraNotasCatalogos_Catalogos" FromRole="CompraNotasCatalogos" ToRole="Catalogos" />
+          <NavigationProperty Name="Notas" Relationship="Self.FK_CompraNotasCatalogos_Notas" FromRole="CompraNotasCatalogos" ToRole="Notas" />
+        </EntityType>
+        <EntityType Name="Notas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Total" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="FechaCompra" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CompraNotasCatalogos" Relationship="Self.FK_CompraNotasCatalogos_Notas" FromRole="Notas" ToRole="CompraNotasCatalogos" />
+        </EntityType>
+        <Association Name="FK_CompraNotasCatalogos_Catalogos">
+          <End Role="Catalogos" Type="Self.Catalogos" Multiplicity="1" />
+          <End Role="CompraNotasCatalogos" Type="Self.CompraNotasCatalogos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalogos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompraNotasCatalogos">
+              <PropertyRef Name="idCatalogos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraNotasCatalogos_Notas">
+          <End Role="Notas" Type="Self.Notas" Multiplicity="1" />
+          <End Role="CompraNotasCatalogos" Type="Self.CompraNotasCatalogos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompraNotasCatalogos">
+              <PropertyRef Name="idNotas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExamenEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Catalogos" EntityType="Self.Catalogos" />
+          <EntitySet Name="CompraNotasCatalogos" EntityType="Self.CompraNotasCatalogos" />
+          <EntitySet Name="Notas" EntityType="Self.Notas" />
+          <AssociationSet Name="FK_CompraNotasCatalogos_Catalogos" Association="Self.FK_CompraNotasCatalogos_Catalogos">
+            <End Role="Catalogos" EntitySet="Catalogos" />
+            <End Role="CompraNotasCatalogos" EntitySet="CompraNotasCatalogos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraNotasCatalogos_Notas" Association="Self.FK_CompraNotasCatalogos_Notas">
+            <End Role="Notas" EntitySet="Notas" />
+            <End Role="CompraNotasCatalogos" EntitySet="CompraNotasCatalogos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ExamenModelStoreContainer" CdmEntityContainer="ExamenEntities">
+          <EntitySetMapping Name="Catalogos">
+            <EntityTypeMapping TypeName="ExamenModel.Catalogos">
+              <MappingFragment StoreEntitySet="Catalogos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="producto" ColumnName="producto" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompraNotasCatalogos">
+            <EntityTypeMapping TypeName="ExamenModel.CompraNotasCatalogos">
+              <MappingFragment StoreEntitySet="CompraNotasCatalogos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idNotas" ColumnName="idNotas" />
+                <ScalarProperty Name="idCatalogos" ColumnName="idCatalogos" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notas">
+            <EntityTypeMapping TypeName="ExamenModel.Notas">
+              <MappingFragment StoreEntitySet="Notas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

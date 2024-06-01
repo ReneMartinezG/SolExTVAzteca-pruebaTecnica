@@ -1,0 +1,27 @@
+﻿@using DataNotas.Models;
+@model CompraNotasCatalogos
+
+@{
+    ViewBag.Title = "CrearNota";
+}
+
+<h2 class="text-center">Agregar Productos</h2>
+<div class="d-flex justify-content-center row">
+    <div class="col">Nota... No.000-@Model.idNotas</div>
+    <div class="col">
+        <form action="/Home/FinalizarCompra" method="post">
+            <input type="hidden" name="idNotas" value="@Model.idNotas" />
+
+            <div class="mb-3">
+                <label class="form-label">productos</label>
+                @Html.DropDownList("idCatalogos", null, "Seleccionar", new { @class = "form-control" })
+            </div>
+
+            <input type="submit" value="Agregar" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+
+
+
+

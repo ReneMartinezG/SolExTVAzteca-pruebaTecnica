@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DataNotas.Models.Catalogos>
+
+@{
+    ViewBag.Title = "Catalogo";
+}
+
+<h2 class="text-center mt-2">Catalogo de Productos</h2>
+<hr />
+<p>
+    @Html.ActionLink("Agregar Producto", "IrCrearCatalogo")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.producto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.precio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.producto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.precio)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

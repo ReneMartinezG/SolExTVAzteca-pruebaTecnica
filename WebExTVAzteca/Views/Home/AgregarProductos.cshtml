@@ -1,0 +1,50 @@
+﻿@using DataNotas.Models
+@model List<CompraNotasCatalogos>
+
+@{
+    ViewBag.Title = "AgregarProductos";
+}
+
+<h2>Agregar Productos</h2>
+<a href="/Home/Index">Inicio</a>
+
+<form action="/Home/AgregarProductosPost">
+    <div class="mb-3">
+        <label class="form-label">Productos</label>
+        @Html.DropDownList("idCatalogos",null,"Seleccionar",new {@class="form-control"})
+    </div>
+    <input type="hidden" name="idNotas" value="@TempData["idNota"]" />
+
+    <input type="submit" value="Agregar" class="btn btn-primary" />
+</form>
+
+<table class="table">
+    <tr>
+        <td>
+            producto
+        </td>
+        <td>Cantidad</td>
+        <td>
+            precio
+        </td>
+        <td>Precio final</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Catalogos.producto
+            </td>
+            <td>@item.Cantidad</td>
+            <td>
+                @item.Catalogos.precio
+            </td>
+            <td>
+                @item.precioFinal
+            </td>
+        </tr>
+    }
+</table>
+
+<p>Total: @TempData["total"]</p>
+
